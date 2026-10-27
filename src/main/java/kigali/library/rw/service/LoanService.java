@@ -1,6 +1,7 @@
 
 package kigali.library.rw.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -8,6 +9,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import kigali.library.rw.domain.Loan;
+import kigali.library.rw.domain.LoanStatus;
 import kigali.library.rw.repository.LoanRepository;
 
 @Service
@@ -25,6 +27,15 @@ public class LoanService {
 
     public List<Loan> findAll() {
         return loanRepository.findAll();
+    }
+
+    public List<Loan> findByStatus(LoanStatus status) {
+        return loanRepository.findByStatusOrderByLoanDateAsc(status);
+    }
+
+    public List<Loan> findBetweenDates(LocalDate start, LocalDate end) {
+        return loanRepository.findByLoanDateBetweenOrderByLoanDateAsc(
+                start, end);
     }
 
     public Optional<Loan> findById(UUID id) {
@@ -52,4 +63,3 @@ public class LoanService {
         return false;
     }
 }
-

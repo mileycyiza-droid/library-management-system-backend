@@ -27,6 +27,10 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
+    public List<Member> findByLastName(String lastName) {
+        return memberRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
     public Optional<Member> findById(UUID id) {
         return memberRepository.findById(id);
     }
@@ -52,4 +56,3 @@ public class MemberService {
         return false;
     }
 }
-

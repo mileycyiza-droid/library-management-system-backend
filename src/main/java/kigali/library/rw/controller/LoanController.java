@@ -1,6 +1,7 @@
 
 package kigali.library.rw.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kigali.library.rw.domain.Loan;
+import kigali.library.rw.domain.LoanStatus;
 import kigali.library.rw.service.LoanService;
 
 @RestController
@@ -39,6 +42,24 @@ public class LoanController {
     @GetMapping("/all")
     public ResponseEntity<List<Loan>> findAll() {
         return ResponseEntity.ok(loanService.findAll());
+    }
+
+    @GetMapping("/by-status")
+    public ResponseEntity<List<Loan>> findByStatus(
+            @RequestParam LoanStatus status) {
+        return ResponseEntity.ok(loanService.findByStatus(status));
+    }
+
+    @GetMapping("/between")
+    public ResponseEntity<List<Loan>> findBetweenDates(
+            @RequestParam String start,
+            @RequestParam String end) {
+
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+
+        return ResponseEntity.ok(
+                loanService.findBetweenDates(startDate, endDate));
     }
 
     @GetMapping("/{id}")
@@ -78,3 +99,4 @@ public class LoanController {
         }
     }
 }
+
