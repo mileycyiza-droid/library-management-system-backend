@@ -31,6 +31,10 @@ public class MemberService {
         return memberRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
     }
 
+    public List<Member> findMembersByLibrarianId(UUID librarianId) {
+        return memberRepository.findMembersByLibrarianId(librarianId);
+    }
+
     public Optional<Member> findById(UUID id) {
         return memberRepository.findById(id);
     }

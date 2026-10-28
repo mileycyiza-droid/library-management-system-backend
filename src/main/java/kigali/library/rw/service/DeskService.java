@@ -27,6 +27,10 @@ public class DeskService {
         return deskRepository.findAll();
     }
 
+    public List<Desk> findFreeDesks() {
+        return deskRepository.findFreeDesks();
+    }
+
     public Optional<Desk> findById(UUID id) {
         return deskRepository.findById(id);
     }
@@ -48,4 +52,3 @@ public class DeskService {
         return false;
     }
 }
-

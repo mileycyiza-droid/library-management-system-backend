@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kigali.library.rw.domain.Member;
+import kigali.library.rw.repository.LibrarianRepository;
 import kigali.library.rw.service.MemberService;
 
 @RestController
@@ -25,9 +26,13 @@ import kigali.library.rw.service.MemberService;
 public class MemberController {
 
     private final MemberService memberService;
+    private final LibrarianRepository librarianRepository;
 
-    public MemberController(MemberService memberService) {
+    public MemberController(
+            MemberService memberService,
+            LibrarianRepository librarianRepository) {
         this.memberService = memberService;
+        this.librarianRepository = librarianRepository;
     }
 
     @PostMapping("/save")
@@ -46,6 +51,19 @@ public class MemberController {
     public ResponseEntity<List<Member>> findByLastName(
             @RequestParam String lastName) {
         return ResponseEntity.ok(memberService.findByLastName(lastName));
+    }
+
+    @GetMapping("/of-librarian/{librarianId}")
+    public ResponseEntity<?> findMembersByLibrarianId(
+            @PathVariable UUID librarianId) {
+
+        if (!librarianRepository.existsById(librarianId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("The librarian with that id does not exist");
+        }
+
+        return ResponseEntity.ok(
+                memberService.findMembersByLibrarianId(librarianId));
     }
 
     @GetMapping("/{id}")

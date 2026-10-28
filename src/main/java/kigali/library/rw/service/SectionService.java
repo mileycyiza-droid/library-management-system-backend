@@ -27,6 +27,10 @@ public class SectionService {
         return sectionRepository.findAll();
     }
 
+    public List<Section> findUnusedSections() {
+        return sectionRepository.findUnusedSections();
+    }
+
     public Optional<Section> findById(UUID id) {
         return sectionRepository.findById(id);
     }
@@ -34,7 +38,6 @@ public class SectionService {
     public Optional<Section> update(UUID id, Section section) {
         return sectionRepository.findById(id).map(existingSection -> {
             existingSection.setName(section.getName());
-            existingSection.setLibrarians(section.getLibrarians());
             return sectionRepository.save(existingSection);
         });
     }
@@ -48,4 +51,3 @@ public class SectionService {
         return false;
     }
 }
-

@@ -41,6 +41,11 @@ public class DeskController {
         return ResponseEntity.ok(deskService.findAll());
     }
 
+    @GetMapping("/free")
+    public ResponseEntity<List<Desk>> findFreeDesks() {
+        return ResponseEntity.ok(deskService.findFreeDesks());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable UUID id) {
         Optional<Desk> desk = deskService.findById(id);

@@ -27,6 +27,10 @@ public class LibrarianService {
         return librarianRepository.findAll();
     }
 
+    public List<Librarian> findBySectionName(String name) {
+        return librarianRepository.findBySectionName(name);
+    }
+
     public Optional<Librarian> findById(UUID id) {
         return librarianRepository.findById(id);
     }
@@ -52,4 +56,3 @@ public class LibrarianService {
         return false;
     }
 }
-

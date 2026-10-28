@@ -41,6 +41,11 @@ public class SectionController {
         return ResponseEntity.ok(sectionService.findAll());
     }
 
+    @GetMapping("/unused")
+    public ResponseEntity<List<Section>> findUnusedSections() {
+        return ResponseEntity.ok(sectionService.findUnusedSections());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable UUID id) {
         Optional<Section> section = sectionService.findById(id);
@@ -78,4 +83,3 @@ public class SectionController {
         }
     }
 }
-
