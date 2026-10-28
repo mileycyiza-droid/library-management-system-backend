@@ -1,4 +1,3 @@
-
 package kigali.library.rw.controller;
 
 import java.time.LocalDate;
@@ -10,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,9 +34,15 @@ public class LoanController {
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Loan loan) {
-        loanService.save(loan);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Loan saved successfully");
+        String message = loanService.save(loan);
+
+        if (message.equals("Loan date cannot be in the past")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        } else if (message.equals("Librarian already has a loan on that date")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        } else {
+            return ResponseEntity.status(HttpStatus.CREATED).body(message);
+        }
     }
 
     @GetMapping("/all")
@@ -89,6 +95,22 @@ public class LoanController {
         }
     }
 
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<String> updateStatus(
+            @PathVariable UUID id,
+            @RequestParam LoanStatus status) {
+
+        String message = loanService.updateStatus(id, status);
+
+        if (message.equals("The loan with that id does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        } else if (message.equals("Loan status updated successfully")) {
+            return ResponseEntity.ok(message);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        }
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id) {
         if (loanService.delete(id)) {
@@ -99,4 +121,3 @@ public class LoanController {
         }
     }
 }
-

@@ -1,4 +1,3 @@
-
 package kigali.library.rw.service;
 
 import java.time.LocalDate;
@@ -21,8 +20,22 @@ public class LoanService {
         this.loanRepository = loanRepository;
     }
 
-    public Loan save(Loan loan) {
-        return loanRepository.save(loan);
+    public String save(Loan loan) {
+        if (loan.getLoanDate().isBefore(LocalDate.now())) {
+            return "Loan date cannot be in the past";
+        }
+
+        if (loanRepository.existsByLibrarian_IdAndLoanDateAndStatusNot(
+                loan.getLibrarian().getId(),
+                loan.getLoanDate(),
+                LoanStatus.CANCELLED)) {
+            return "Librarian already has a loan on that date";
+        }
+
+        loan.setStatus(LoanStatus.REQUESTED);
+        loanRepository.save(loan);
+
+        return "Loan saved successfully";
     }
 
     public List<Loan> findAll() {
@@ -45,13 +58,41 @@ public class LoanService {
     public Optional<Loan> update(UUID id, Loan loan) {
         return loanRepository.findById(id).map(existingLoan -> {
             existingLoan.setLoanDate(loan.getLoanDate());
-            existingLoan.setStatus(loan.getStatus());
             existingLoan.setBookTitle(loan.getBookTitle());
             existingLoan.setMember(loan.getMember());
             existingLoan.setLibrarian(loan.getLibrarian());
 
             return loanRepository.save(existingLoan);
         });
+    }
+
+    public String updateStatus(UUID id, LoanStatus newStatus) {
+        Optional<Loan> optionalLoan = loanRepository.findById(id);
+
+        if (optionalLoan.isEmpty()) {
+            return "The loan with that id does not exist";
+        }
+
+        Loan loan = optionalLoan.get();
+        LoanStatus currentStatus = loan.getStatus();
+
+        boolean validTransition =
+                (currentStatus == LoanStatus.REQUESTED
+                        && (newStatus == LoanStatus.ISSUED
+                        || newStatus == LoanStatus.CANCELLED))
+                || (currentStatus == LoanStatus.ISSUED
+                        && (newStatus == LoanStatus.RETURNED
+                        || newStatus == LoanStatus.CANCELLED));
+
+        if (!validTransition) {
+            return "Cannot change status from "
+                    + currentStatus + " to " + newStatus;
+        }
+
+        loan.setStatus(newStatus);
+        loanRepository.save(loan);
+
+        return "Loan status updated successfully";
     }
 
     public boolean delete(UUID id) {

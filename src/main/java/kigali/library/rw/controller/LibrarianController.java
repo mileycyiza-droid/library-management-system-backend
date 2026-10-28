@@ -1,4 +1,3 @@
-
 package kigali.library.rw.controller;
 
 import java.util.List;
@@ -9,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -73,6 +73,40 @@ public class LibrarianController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("The librarian with that id does not exist");
+        }
+    }
+
+    @PutMapping("/{librarianId}/sections/{sectionId}")
+    public ResponseEntity<String> addSection(
+            @PathVariable UUID librarianId,
+            @PathVariable UUID sectionId) {
+
+        String message = librarianService.addSection(librarianId, sectionId);
+
+        if (message.equals("The librarian with that id does not exist")
+                || message.equals("That section does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        } else if (message.equals("The librarian already has that section")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        } else {
+            return ResponseEntity.ok(message);
+        }
+    }
+
+    @PatchMapping("/{librarianId}/desk")
+    public ResponseEntity<String> changeDesk(
+            @PathVariable UUID librarianId,
+            @RequestParam int deskNumber) {
+
+        String message = librarianService.changeDesk(librarianId, deskNumber);
+
+        if (message.equals("The librarian with that id does not exist")
+                || message.equals("The desk with that deskNumber does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        } else if (message.equals("That desk is taken by another librarian")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        } else {
+            return ResponseEntity.ok(message);
         }
     }
 
