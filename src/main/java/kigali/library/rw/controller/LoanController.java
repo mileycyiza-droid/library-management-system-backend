@@ -1,3 +1,4 @@
+
 package kigali.library.rw.controller;
 
 import java.time.LocalDate;
@@ -113,11 +114,14 @@ public class LoanController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> delete(@PathVariable UUID id) {
-        if (loanService.delete(id)) {
-            return ResponseEntity.ok("Loan deleted successfully");
+        String message = loanService.delete(id);
+
+        if (message.equals("The loan with that id does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        } else if (message.equals("That loan has fines, delete them first")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("The loan with that id does not exist");
+            return ResponseEntity.ok(message);
         }
     }
 }

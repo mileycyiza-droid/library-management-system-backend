@@ -1,3 +1,4 @@
+
 package kigali.library.rw.service;
 
 import java.time.LocalDate;
@@ -9,15 +10,19 @@ import org.springframework.stereotype.Service;
 
 import kigali.library.rw.domain.Loan;
 import kigali.library.rw.domain.LoanStatus;
+import kigali.library.rw.repository.FineRepository;
 import kigali.library.rw.repository.LoanRepository;
 
 @Service
 public class LoanService {
 
     private final LoanRepository loanRepository;
+    private final FineRepository fineRepository;
 
-    public LoanService(LoanRepository loanRepository) {
+    public LoanService(LoanRepository loanRepository,
+                       FineRepository fineRepository) {
         this.loanRepository = loanRepository;
+        this.fineRepository = fineRepository;
     }
 
     public String save(Loan loan) {
@@ -95,12 +100,19 @@ public class LoanService {
         return "Loan status updated successfully";
     }
 
-    public boolean delete(UUID id) {
-        if (loanRepository.existsById(id)) {
-            loanRepository.deleteById(id);
-            return true;
+    public String delete(UUID id) {
+        Optional<Loan> optionalLoan = loanRepository.findById(id);
+
+        if (optionalLoan.isEmpty()) {
+            return "The loan with that id does not exist";
         }
 
-        return false;
+        if (fineRepository.existsByLoan_Id(id)) {
+            return "That loan has fines, delete them first";
+        }
+
+        loanRepository.deleteById(id);
+
+        return "Loan deleted successfully";
     }
 }
