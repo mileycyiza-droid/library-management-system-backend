@@ -11,10 +11,8 @@ import kigali.library.rw.domain.Member;
 
 public interface MemberRepository extends JpaRepository<Member, UUID> {
 
-    // Part B: Find members by last name, ignoring case, ordered by first name
     List<Member> findByLastNameIgnoreCaseOrderByFirstNameAsc(String lastName);
 
-    // Part C4: Find unique members who have loans with a specific librarian
     @Query("SELECT DISTINCT lo.member FROM Loan lo WHERE lo.librarian.id = :librarianId")
     List<Member> findMembersByLibrarianId(@Param("librarianId") UUID librarianId);
 }

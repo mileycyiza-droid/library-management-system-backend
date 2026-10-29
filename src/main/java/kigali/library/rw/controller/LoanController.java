@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,6 +52,45 @@ public class LoanController {
         return ResponseEntity.ok(loanService.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable UUID id) {
+        Optional<Loan> optionalLoan = loanService.findById(id);
+
+        if (optionalLoan.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("The loan with that id does not exist");
+        } else {
+            return ResponseEntity.ok(optionalLoan.get());
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> update(
+            @PathVariable UUID id,
+            @RequestBody Loan loan) {
+
+        String message = loanService.update(id, loan);
+
+        if (message.equals("The loan with that id does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        } else {
+            return ResponseEntity.ok(message);
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable UUID id) {
+        String message = loanService.delete(id);
+
+        if (message.equals("The loan with that id does not exist")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+        } else if (message.equals("That loan has fines, delete them first")) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
+        } else {
+            return ResponseEntity.ok(message);
+        }
+    }
+
     @GetMapping("/by-status")
     public ResponseEntity<List<Loan>> findByStatus(
             @RequestParam LoanStatus status) {
@@ -69,33 +109,6 @@ public class LoanController {
                 loanService.findBetweenDates(startDate, endDate));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable UUID id) {
-        Optional<Loan> loan = loanService.findById(id);
-
-        if (loan.isPresent()) {
-            return ResponseEntity.ok(loan.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("The loan with that id does not exist");
-        }
-    }
-
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(
-            @PathVariable UUID id,
-            @RequestBody Loan loan) {
-
-        Optional<Loan> updatedLoan = loanService.update(id, loan);
-
-        if (updatedLoan.isPresent()) {
-            return ResponseEntity.ok("Loan updated successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("The loan with that id does not exist");
-        }
-    }
-
     @PatchMapping("/{id}/status")
     public ResponseEntity<String> updateStatus(
             @PathVariable UUID id,
@@ -105,23 +118,25 @@ public class LoanController {
 
         if (message.equals("The loan with that id does not exist")) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-        } else if (message.equals("Loan status updated successfully")) {
-            return ResponseEntity.ok(message);
-        } else {
+        } else if (message.startsWith("Cannot change status from")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+        } else {
+            return ResponseEntity.ok(message);
         }
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> delete(@PathVariable UUID id) {
-        String message = loanService.delete(id);
+    @GetMapping("/stats/by-status")
+    public ResponseEntity<List<Object[]>> countLoansByStatus() {
+        return ResponseEntity.ok(loanService.countLoansByStatus());
+    }
 
-        if (message.equals("The loan with that id does not exist")) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-        } else if (message.equals("That loan has fines, delete them first")) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
-        } else {
-            return ResponseEntity.ok(message);
-        }
+    @PatchMapping("/cancel-day")
+    public ResponseEntity<String> cancelLoansForLibrarianOnDate(
+            @RequestParam UUID librarianId,
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+
+        return ResponseEntity.ok(
+                loanService.cancelLoansForLibrarianOnDate(librarianId, date));
     }
 }

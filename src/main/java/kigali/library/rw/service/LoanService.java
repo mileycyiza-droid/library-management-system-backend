@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import kigali.library.rw.domain.Loan;
 import kigali.library.rw.domain.LoanStatus;
@@ -47,57 +48,26 @@ public class LoanService {
         return loanRepository.findAll();
     }
 
-    public List<Loan> findByStatus(LoanStatus status) {
-        return loanRepository.findByStatusOrderByLoanDateAsc(status);
-    }
-
-    public List<Loan> findBetweenDates(LocalDate start, LocalDate end) {
-        return loanRepository.findByLoanDateBetweenOrderByLoanDateAsc(
-                start, end);
-    }
-
     public Optional<Loan> findById(UUID id) {
         return loanRepository.findById(id);
     }
 
-    public Optional<Loan> update(UUID id, Loan loan) {
-        return loanRepository.findById(id).map(existingLoan -> {
-            existingLoan.setLoanDate(loan.getLoanDate());
-            existingLoan.setBookTitle(loan.getBookTitle());
-            existingLoan.setMember(loan.getMember());
-            existingLoan.setLibrarian(loan.getLibrarian());
-
-            return loanRepository.save(existingLoan);
-        });
-    }
-
-    public String updateStatus(UUID id, LoanStatus newStatus) {
+    public String update(UUID id, Loan loan) {
         Optional<Loan> optionalLoan = loanRepository.findById(id);
 
         if (optionalLoan.isEmpty()) {
             return "The loan with that id does not exist";
         }
 
-        Loan loan = optionalLoan.get();
-        LoanStatus currentStatus = loan.getStatus();
+        Loan existingLoan = optionalLoan.get();
+        existingLoan.setLoanDate(loan.getLoanDate());
+        existingLoan.setBookTitle(loan.getBookTitle());
+        existingLoan.setMember(loan.getMember());
+        existingLoan.setLibrarian(loan.getLibrarian());
 
-        boolean validTransition =
-                (currentStatus == LoanStatus.REQUESTED
-                        && (newStatus == LoanStatus.ISSUED
-                        || newStatus == LoanStatus.CANCELLED))
-                || (currentStatus == LoanStatus.ISSUED
-                        && (newStatus == LoanStatus.RETURNED
-                        || newStatus == LoanStatus.CANCELLED));
+        loanRepository.save(existingLoan);
 
-        if (!validTransition) {
-            return "Cannot change status from "
-                    + currentStatus + " to " + newStatus;
-        }
-
-        loan.setStatus(newStatus);
-        loanRepository.save(loan);
-
-        return "Loan status updated successfully";
+        return "Loan updated successfully";
     }
 
     public String delete(UUID id) {
@@ -114,5 +84,64 @@ public class LoanService {
         loanRepository.deleteById(id);
 
         return "Loan deleted successfully";
+    }
+
+    public List<Loan> findByStatus(LoanStatus status) {
+        return loanRepository.findByStatusOrderByLoanDateAsc(status);
+    }
+
+    public List<Loan> findBetweenDates(LocalDate start, LocalDate end) {
+        return loanRepository.findByLoanDateBetweenOrderByLoanDateAsc(
+                start, end);
+    }
+
+    public String updateStatus(UUID id, LoanStatus status) {
+        Optional<Loan> optionalLoan = loanRepository.findById(id);
+
+        if (optionalLoan.isEmpty()) {
+            return "The loan with that id does not exist";
+        }
+
+        Loan loan = optionalLoan.get();
+        LoanStatus currentStatus = loan.getStatus();
+
+        if (currentStatus == LoanStatus.RETURNED
+                || currentStatus == LoanStatus.CANCELLED) {
+            return "Cannot change status from " + currentStatus + " to " + status;
+        }
+
+        if (currentStatus == LoanStatus.REQUESTED
+                && status != LoanStatus.ISSUED
+                && status != LoanStatus.CANCELLED) {
+            return "Cannot change status from " + currentStatus + " to " + status;
+        }
+
+        if (currentStatus == LoanStatus.ISSUED
+                && status != LoanStatus.RETURNED
+                && status != LoanStatus.CANCELLED) {
+            return "Cannot change status from " + currentStatus + " to " + status;
+        }
+
+        loan.setStatus(status);
+        loanRepository.save(loan);
+
+        return "Loan status updated successfully";
+    }
+
+    public List<Object[]> countLoansByStatus() {
+        return loanRepository.countLoansByStatus();
+    }
+
+    @Transactional
+    public String cancelLoansForLibrarianOnDate(
+            UUID librarianId, LocalDate date) {
+
+        int count = loanRepository.cancelLoansForLibrarianOnDate(
+                librarianId,
+                date,
+                LoanStatus.CANCELLED,
+                LoanStatus.RETURNED);
+
+        return count + " loans cancelled";
     }
 }
