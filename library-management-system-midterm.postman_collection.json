@@ -1,0 +1,796 @@
+{
+  "info": {
+    "name": "Library Management System API",
+    "description": "Exported from the user's local Postman collection files. Contains the existing Part A–F request folders.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Part A- Domain Model and CRUD",
+      "item": [
+        {
+          "name": "01 - Sections",
+          "item": [
+            {
+              "name": "01 - Save Section",
+              "request": {
+                "method": "POST",
+                "url": "http://localhost:8080/api/sections/save",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"name\": \"Reference\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "02 - Get All Sections",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8080/api/sections/all"
+              }
+            },
+            {
+              "name": "03 - Get Section By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8080/api/sections/f501af5f-ec95-468c-ad9d-90c6c9aff972"
+              }
+            },
+            {
+              "name": "04 - Update Section",
+              "request": {
+                "method": "PUT",
+                "url": "http://localhost:8080/api/sections/update/f501af5f-ec95-468c-ad9d-90c6c9aff972",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"name\": \"Science and Technology\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "05 - Delete Section",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:8080/api/sections/delete/f501af5f-ec95-468c-ad9d-90c6c9aff972"
+              }
+            }
+          ]
+        },
+        {
+          "name": "02 - Desks",
+          "item": [
+            {
+              "name": "01 - Save Desk",
+              "request": {
+                "method": "POST",
+                "url": "http://localhost:8080/api/desks/save",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"deskNumber\": 4,\r\n  \"name\": \"Reference Desk\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "02 - Get All Desks",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8080/api/desks/all"
+              }
+            },
+            {
+              "name": "03 - Get Desk By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8080/api/desks/ea50f129-e113-44fe-a3b6-6235fdcb8f47"
+              }
+            },
+            {
+              "name": "04 - Update Desk",
+              "request": {
+                "method": "PUT",
+                "url": "http://localhost:8080/api/desks/update/ea50f129-e113-44fe-a3b6-6235fdcb8f47",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"deskNumber\": 1,\r\n  \"name\": \"Circulation Desk\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "05 - Delete Desk",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:8080/api/desks/delete/abfad28b-0c27-48a9-9229-70812ebf9c8e"
+              }
+            }
+          ]
+        },
+        {
+          "name": "03 - Librarians",
+          "item": [
+            {
+              "name": "01 - Save Librarian",
+              "request": {
+                "method": "POST",
+                "url": "http://localhost:8080/api/librarians/save",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"firstName\": \"David\",\r\n  \"lastName\": \"Niyonsenga\",\r\n  \"email\": \"david.niyonsenga@library.com\",\r\n  \"desk\": {\r\n    \"id\": \"c28a88a8-ca2c-4504-bf6e-1a038d506193\"\r\n  },\r\n  \"sections\": [\r\n    {\r\n      \"id\": \"f501af5f-ec95-468c-ad9d-90c6c9aff972\"\r\n    }\r\n  ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "02 - Get All Librarians",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8080/api/librarians/all"
+              }
+            },
+            {
+              "name": "03 - Get Librarian By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8080/api/librarians/e8a88e89-3c05-4b63-9e9d-7832d13e4440"
+              }
+            },
+            {
+              "name": "04 - Update Librarian",
+              "request": {
+                "method": "PUT",
+                "url": "http://localhost:8080/api/librarians/update/104dd7f8-33db-4300-b255-83f1a26c050d",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"firstName\": \"Jean\",\r\n  \"lastName\": \"Mugisha\",\r\n  \"email\": \"jean.mugisha@library.com\",\r\n  \"desk\": {\r\n    \"id\": \"f6de239b-fd06-427a-8a44-4c872e862329\"\r\n  },\r\n  \"sections\": [\r\n    {\r\n      \"id\": \"f501af5f-ec95-468c-ad9d-90c6c9aff972\"\r\n    }\r\n  ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "05 - Delete Librarian",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:8080/api/librarians/delete/e8a88e89-3c05-4b63-9e9d-7832d13e4440"
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 - Members",
+          "item": [
+            {
+              "name": "01 - Save Member",
+              "request": {
+                "method": "POST",
+                "url": "http://localhost:8080/api/members/save",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"firstName\": \"Daniel\",\r\n  \"lastName\": \"Niyonsenga\",\r\n  \"memberNumber\": \"MEM005\",\r\n  \"email\": \"daniel.niyonsenga@example.com\",\r\n  \"phone\": \"0788567890\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "02 - Get All Members",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8080/api/members/all"
+              }
+            },
+            {
+              "name": "03 - Get Member By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8080/api/members/032f57ad-3669-4ef8-b124-039ca48f4f12"
+              }
+            },
+            {
+              "name": "04 - Update Member",
+              "request": {
+                "method": "PUT",
+                "url": "http://localhost:8080/api/members/update/032f57ad-3669-4ef8-b124-039ca48f4f12",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"firstName\": \"Patrick\",\r\n  \"lastName\": \"Kamanzi\",\r\n  \"memberNumber\": \"MEM001\",\r\n  \"email\": \"patrick.kamanzi@example.com\",\r\n  \"phone\": \"0788998877\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "05 - Delete Member",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:8080/api/members/delete/032f57ad-3669-4ef8-b124-039ca48f4f12"
+              }
+            }
+          ]
+        },
+        {
+          "name": "05 - Loans",
+          "item": [
+            {
+              "name": "01 - Save Loan",
+              "request": {
+                "method": "POST",
+                "url": "http://localhost:8080/api/loans/save",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"loanDate\": \"2026-10-20\",\r\n  \"status\": \"CANCELLED\",\r\n  \"bookTitle\": \"Introduction to Computer Science\",\r\n  \"member\": {\r\n    \"id\": \"05e38c34-51e7-4a60-8a72-564adb64f861\"\r\n  },\r\n  \"librarian\": {\r\n    \"id\": \"104dd7f8-33db-4300-b255-83f1a26c050d\"\r\n  }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "2 - Get All Loans",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8080/api/loans/all"
+              }
+            },
+            {
+              "name": "3 - Get Loan By ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8080/api/loans/0c10d28b-44d1-4ee0-b476-e750230becb0"
+              }
+            },
+            {
+              "name": "4 - Update Loan",
+              "request": {
+                "method": "PUT",
+                "url": "http://localhost:8080/api/loans/update/0c10d28b-44d1-4ee0-b476-e750230becb0",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"loanDate\": \"2026-10-20\",\r\n  \"status\": \"CANCELLED\",\r\n  \"bookTitle\": \"Introduction to Computer Science - Revised Edition\",\r\n  \"member\": {\r\n    \"id\": \"05e38c34-51e7-4a60-8a72-564adb64f861\"\r\n  },\r\n  \"librarian\": {\r\n    \"id\": \"104dd7f8-33db-4300-b255-83f1a26c050d\"\r\n  }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "5 - Delete Loan",
+              "request": {
+                "method": "DELETE",
+                "url": "http://localhost:8080/api/loans/delete/0c10d28b-44d1-4ee0-b476-e750230becb0"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Part B - Derived Queries",
+      "item": [
+        {
+          "name": "B1 - Find Members By Last Name",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/members/by-last-name?lastName=kamanzi&lastName=kamanzi"
+          }
+        },
+        {
+          "name": "B2 - Find Loans By Status",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/loans/by-status?status=REQUESTED&status=REQUESTED"
+          }
+        },
+        {
+          "name": "B3 - Find Loans Between Dates",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/loans/between?start=2026-10-01&end=2026-10-31&start=2026-10-01&end=2026-10-31"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Part C - JPQL Queries",
+      "item": [
+        {
+          "name": "C1 - Find Librarians By Section",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/librarians/by-section?name=FICTION&name=FICTION"
+          }
+        },
+        {
+          "name": "C2 - Find Free Desks",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/desks/free"
+          }
+        },
+        {
+          "name": "C3 - Find Unused Sections",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/sections/unused"
+          }
+        },
+        {
+          "name": "C4 - Find Members Of Librarian",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/members/of-librarian/104dd7f8-33db-4300-b255-83f1a26c050d"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Part D - Loan and Librarian Management",
+      "item": [
+        {
+          "name": "D1 - Save Loan",
+          "item": [
+            {
+              "name": "D1 - Save Valid Loan",
+              "request": {
+                "method": "POST",
+                "url": "http://localhost:8080/api/loans/save",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"loanDate\": \"2026-10-31\",\r\n  \"status\": \"CANCELLED\",\r\n  \"bookTitle\": \"Test Book\",\r\n  \"member\": {\r\n    \"id\": \"05e38c34-51e7-4a60-8a72-564adb64f861\"\r\n  },\r\n  \"librarian\": {\r\n    \"id\": \"104dd7f8-33db-4300-b255-83f1a26c050d\"\r\n  }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "D1 - Reject Past Date",
+              "request": {
+                "method": "POST",
+                "url": "http://localhost:8080/api/loans/save",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"loanDate\": \"2026-10-27\",\r\n  \"status\": \"CANCELLED\",\r\n  \"bookTitle\": \"Test Book\",\r\n  \"member\": {\r\n    \"id\": \"05e38c34-51e7-4a60-8a72-564adb64f861\"\r\n  },\r\n  \"librarian\": {\r\n    \"id\": \"104dd7f8-33db-4300-b255-83f1a26c050d\"\r\n  }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "D1 - Reject Duplicate Loan",
+              "request": {
+                "method": "POST",
+                "url": "http://localhost:8080/api/loans/save",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"loanDate\": \"2026-10-31\",\r\n  \"status\": \"REQUESTED\",\r\n  \"bookTitle\": \"Duplicate Loan Test\",\r\n  \"member\": {\r\n    \"id\": \"0aef3c6f-0fbb-40bd-86b5-63574ccc0a64\"\r\n  },\r\n  \"librarian\": {\r\n    \"id\": \"104dd7f8-33db-4300-b255-83f1a26c050d\"\r\n  }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "D1 - Allow Loan After Cancellation",
+              "request": {
+                "method": "POST",
+                "url": "http://localhost:8080/api/loans/save",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"loanDate\": \"2026-11-16\",\r\n  \"status\": \"REQUESTED\",\r\n  \"bookTitle\": \"Cancellation Exception Test\",\r\n  \"member\": {\r\n    \"id\": \"05e38c34-51e7-4a60-8a72-564adb64f861\"\r\n  },\r\n  \"librarian\": {\r\n    \"id\": \"8daa416d-912b-41c3-94bb-1530eac1952f\"\r\n  }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "D2 - Update Loan Status",
+          "item": [
+            {
+              "name": "D2 - Update Loan Status to RETURNED",
+              "request": {
+                "method": "PATCH",
+                "url": "http://localhost:8080/api/loans/d181614c-d954-4504-979d-28048a71d5b8/status?status=RETURNED&status=RETURNED"
+              }
+            },
+            {
+              "name": "D2 - Reject Invalid Status Transition",
+              "request": {
+                "method": "PATCH",
+                "url": "http://localhost:8080/api/loans/d181614c-d954-4504-979d-28048a71d5b8/status?status=CANCELLED&status=CANCELLED"
+              }
+            },
+            {
+              "name": "D2 - Update Loan Status to CANCELLED",
+              "request": {
+                "method": "PATCH",
+                "url": "http://localhost:8080/api/loans/ddcc45c1-399e-48be-9170-e72853452feb/status?status=CANCELLED&status=CANCELLED"
+              }
+            },
+            {
+              "name": "D2 - Prevent PUT from Changing Status",
+              "request": {
+                "method": "PUT",
+                "url": "http://localhost:8080/api/loans/update/431475ab-20e2-4f32-a022-5d72042a0d90",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"loanDate\": \"2026-10-20\",\r\n  \"status\": \"CANCELLED\",\r\n  \"bookTitle\": \"Database Systems\",\r\n  \"member\": {\r\n    \"id\": \"05e38c34-51e7-4a60-8a72-564adb64f861\"\r\n  },\r\n  \"librarian\": {\r\n    \"id\": \"104dd7f8-33db-4300-b255-83f1a26c050d\"\r\n  }\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "name": "D2 - Verify PUT Does Not Change Status",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8080/api/loans/431475ab-20e2-4f32-a022-5d72042a0d90"
+              }
+            },
+            {
+              "name": "D2 - ISSUED to CANCELLED",
+              "request": {
+                "method": "PATCH",
+                "url": "http://localhost:8080/api/loans/431475ab-20e2-4f32-a022-5d72042a0d90/status?status=CANCELLED&status=CANCELLED"
+              }
+            },
+            {
+              "name": "D2 - Reject Missing Loan",
+              "request": {
+                "method": "PATCH",
+                "url": "http://localhost:8080/api/loans/11111111-1111-1111-1111-111111111111/status?status=ISSUED&status=ISSUED"
+              }
+            }
+          ]
+        },
+        {
+          "name": "D3 - Add Section to Librarian",
+          "item": [
+            {
+              "name": "D3 - Add Section Successfully",
+              "request": {
+                "method": "PUT",
+                "url": "http://localhost:8080/api/librarians/104dd7f8-33db-4300-b255-83f1a26c050d/sections/af498c74-8f51-4eb9-b029-c74635298142"
+              }
+            },
+            {
+              "name": "D3 - Reject Duplicate Section",
+              "request": {
+                "method": "PUT",
+                "url": "http://localhost:8080/api/librarians/104dd7f8-33db-4300-b255-83f1a26c050d/sections/af498c74-8f51-4eb9-b029-c74635298142"
+              }
+            },
+            {
+              "name": "D3 - Reject Missing Librarian",
+              "request": {
+                "method": "PUT",
+                "url": "http://localhost:8080/api/librarians/11111111-1111-1111-1111-111111111111/sections/af498c74-8f51-4eb9-b029-c74635298142"
+              }
+            }
+          ]
+        },
+        {
+          "name": "D4 - Change Librarian Desk",
+          "item": [
+            {
+              "name": "D4 - Change Desk Successfully",
+              "request": {
+                "method": "PATCH",
+                "url": "http://localhost:8080/api/librarians/104dd7f8-33db-4300-b255-83f1a26c050d/desk?deskNumber=4&deskNumber=4"
+              }
+            },
+            {
+              "name": "D4 - Reject Occupied Desk",
+              "request": {
+                "method": "PATCH",
+                "url": "http://localhost:8080/api/librarians/8daa416d-912b-41c3-94bb-1530eac1952f/desk?deskNumber=4&deskNumber=4"
+              }
+            },
+            {
+              "name": "D4 - Verify Old Desk Is Free",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8080/api/desks/free"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Part E - Fines",
+      "item": [
+        {
+          "name": "E1 - Save Fine",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/fines/save?loanId=8ace3c31-e2c6-45ed-8ff5-9969480ea24e&loanId=8ace3c31-e2c6-45ed-8ff5-9969480ea24e",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fineType\": \"Late return\",\r\n    \"note\": \"Fine for loan deletion test\",\r\n    \"amount\": 2500\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "E1-Loan Not Found",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/fines/save?loanId=00000000-0000-0000-0000-000000000000&loanId=00000000-0000-0000-0000-000000000000",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fineType\": \"Late return\",\r\n    \"note\": \"Returned five days late\",\r\n    \"amount\": 2500\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "E1 - Loan Not Returned",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/fines/save?loanId=a33e186c-03e4-453a-bfd1-25be82876161&loanId=a33e186c-03e4-453a-bfd1-25be82876161",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fineType\": \"Late return\",\r\n    \"note\": \"Returned five days late\",\r\n    \"amount\": 2500\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "E2 - Get Fines By Member Number",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/fines/member/MEM002"
+          }
+        },
+        {
+          "name": "E2 - Create Second Fine For Ordering Test",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8080/api/fines/save?loanId=8ace3c31-e2c6-45ed-8ff5-9969480ea24e&loanId=8ace3c31-e2c6-45ed-8ff5-9969480ea24e",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"fineType\": \"Damaged book\",\r\n    \"note\": \"Book returned with damaged pages\",\r\n    \"amount\": 3000\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "E2 - Verify Fines Ordered By Date",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/fines/member/MEM002"
+          }
+        },
+        {
+          "name": "E3 - Delete Fine",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/api/fines/delete/79c0eaf8-6c46-4f21-8632-5cf409122b42"
+          }
+        },
+        {
+          "name": "E3 - Prevent Loan Deletion With Fines",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/api/loans/delete/8ace3c31-e2c6-45ed-8ff5-9969480ea24e"
+          }
+        },
+        {
+          "name": "E3 - Fine Not Found",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/api/fines/delete/00000000-0000-0000-0000-000000000000"
+          }
+        },
+        {
+          "name": "E3 - Loan Not Found",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:8080/api/loans/delete/00000000-0000-0000-0000-000000000000"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Part F - Reports and Bulk Updates",
+      "item": [
+        {
+          "name": "F1 - Loans Per Status",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8080/api/loans/stats/by-status"
+          }
+        },
+        {
+          "name": "F2 - Cancel Loans for Librarian Absence",
+          "request": {
+            "method": "PATCH",
+            "url": "http://localhost:8080/api/loans/cancel-day?librarianId=104dd7f8-33db-4300-b255-83f1a26c050d&date=2026-10-20&librarianId=104dd7f8-33db-4300-b255-83f1a26c050d&date=2026-10-20"
+          }
+        }
+      ]
+    }
+  ]
+}
