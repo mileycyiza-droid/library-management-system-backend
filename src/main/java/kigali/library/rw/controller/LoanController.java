@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -138,5 +142,24 @@ public class LoanController {
 
         return ResponseEntity.ok(
                 loanService.cancelLoansForLibrarianOnDate(librarianId, date));
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<Loan>> findAllPaginated(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "loanDate,desc") String sort) {
+
+        String[] sortParts = sort.split(",");
+        Sort.Direction direction = sortParts.length > 1
+                ? Sort.Direction.fromString(sortParts[1])
+                : Sort.Direction.ASC;
+
+        Pageable pageable = PageRequest.of(
+                page,
+                size,
+                Sort.by(direction, sortParts[0]));
+
+        return ResponseEntity.ok(loanService.findAll(pageable));
     }
 }

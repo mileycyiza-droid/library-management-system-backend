@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,6 +27,10 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
             UUID librarianId,
             LocalDate loanDate,
             LoanStatus status);
+
+    long countByLoanDate(LocalDate loanDate);
+
+    long countByStatus(LoanStatus status);
 
     @Query("SELECT l.status, COUNT(l) FROM Loan l GROUP BY l.status")
     List<Object[]> countLoansByStatus();

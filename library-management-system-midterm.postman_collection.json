@@ -791,6 +791,53 @@
           }
         }
       ]
+    },
+    {
+      "name": "Bonus Features",
+      "item": [
+        {
+          "name": "BONUS-1 Dashboard Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:8080/api/dashboard/summary"
+          }
+        },
+        {
+          "name": "BONUS-2 Loans Pagination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/loans/page?page=0&size=5&sort=loanDate%2Cdesc",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "loans",
+                "page"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "5"
+                },
+                {
+                  "key": "sort",
+                  "value": "loanDate,desc"
+                }
+              ]
+            }
+          }
+        }
+      ]
     }
   ]
 }
